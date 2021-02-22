@@ -28,7 +28,7 @@ void freeRibbon(Ribbon);
  * Prototypes of the functions of the List
  */
 
-List initList();
+List* initList();
 
 void freeList(List*);
 

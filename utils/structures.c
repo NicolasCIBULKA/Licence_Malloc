@@ -24,7 +24,7 @@ void freeRibbon(Ribbon ribbon){
 /**
  * Initialize the list of adress that will point on datas stored on the ribbon
  */
-List initList(){
+List* initList(){
     return NULL;
 }
 
@@ -34,8 +34,8 @@ List initList(){
 void freeList(List *list){
     while (list != NULL)
     {
-        List *cell = *list;
-        list = (*list)->next;
+        List *cell = list;
+        *list = (*list)->next;
         free(cell);
     }
 }
