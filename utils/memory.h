@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include "structures.h"
 
+
 // structures
 
 typedef struct{
-    Ribbon dataRibbon;
-    List *memoryList;
-}Memory;
+    int totalSize;
+    int usedSize;
+    Header *begin;
+    Header *end;
+}HeaderList;
 
-// functions
-
-Memory initMemory(int);
