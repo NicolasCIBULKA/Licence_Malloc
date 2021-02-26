@@ -9,5 +9,12 @@ typedef struct{
     int usedSize;
     Header *begin;
     Header *end;
-}HeaderList;
+}Memory;
 
+// functions
+
+int initMemory(int);
+
+int freeMemory();
+
+int isMemoryFree();
