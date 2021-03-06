@@ -6,7 +6,6 @@
 typedef struct cell{
     int size;
     int isFree;
-    int mutex;
     struct cell *next;
 }*Header;
 

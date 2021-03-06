@@ -5,8 +5,9 @@
 typedef struct{
     int totalSize;
     int usedSize;
-    Header *begin;
-    Header *end;
+    int mutex;
+    Header begin;
+    Header end;
 }Memory;
 
 // functions

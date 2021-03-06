@@ -24,7 +24,7 @@ batch.o : batch.c ./utils/memory.h
 test.o: test.c ./utils/memory.h
 	gcc -c test.c
 
-memory.o: ./utils/memory.c ./utils/memory.h ./utils/structures.h
+memory.o: ./utils/memory.c ./utils/memory.h ./utils/structures.h ./utils/ipcTools.h
 	gcc -c ./utils/memory.c 
 
 ipcTools.o: ./utils/ipcTools.c ./utils/ipcTools.h
