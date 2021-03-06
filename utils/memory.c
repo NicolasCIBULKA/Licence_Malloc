@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "memory.h"
-#include "structures.h"
+
 Memory memory;
 
 int initMemory(int n){
@@ -11,7 +11,7 @@ int initMemory(int n){
         memory.end = NULL;
         return n;
     }
-    return 0; 
+    return 0;
 }
 
 int freeMemory(){
@@ -25,4 +25,11 @@ int isMemoryFree(){
     return 0;
 }
 
+void* myAlloc(int n){
+
+}
+
+int myFree(void* p){
+    
+}
 
