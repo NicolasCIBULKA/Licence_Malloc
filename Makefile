@@ -1,25 +1,13 @@
-all : test batch commandline interactive
+all : test main
 
 test : test.o structures.o memory.o ipcTools.o
 	gcc test.o structures.o memory.o ipcTools.o -o test 
 
-batch : batch.o structures.o memory.o ipcTools.o
-	gcc batch.o structures.o memory.o ipcTools.o -o batch
+main : main.o structures.o memory.o ipcTools.o
+	gcc main.o structures.o memory.o ipcTools.o -o main 
 
-commandline : commandline.o structures.o memory.o ipcTools.o
-	gcc commandline.o structures.o memory.o ipcTools.o -o commandline
-
-interactive : interactive.o structures.o memory.o ipcTools.o
-	gcc interactive.o structures.o memory.o ipcTools.o -o interactive
-
-interactive.o : interactive.c ./utils/memory.h
-	gcc -c interactive.c
-
-commandline.o: commandline.c ./utils/memory.h
-	gcc -c commandline.c
-
-batch.o : batch.c ./utils/memory.h
-	gcc -c batch.c
+main.o : main.c ./utils/memory.h
+	gcc -c main.c
 
 test.o: test.c ./utils/memory.h
 	gcc -c test.c
@@ -33,5 +21,8 @@ ipcTools.o: ./utils/ipcTools.c ./utils/ipcTools.h
 structures.o: ./utils/structures.c ./utils/structures.h
 	gcc -c ./utils/structures.c
 
+doc :
+	doxygen 
+
 clear :
-	rm -f *.o test batch commandline interactive
+	rm -f *.o test main

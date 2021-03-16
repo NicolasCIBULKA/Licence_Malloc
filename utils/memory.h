@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include "structures.h"
-// structures
 
+
+/**
+ * @brief The structure of the Memory
+ * 
+ */
 typedef struct{
-    int totalSize;
-    int usedSize;
-    int mutex;
-    Header begin;
-    Header end;
+    int totalSize;  //!< The total size of the memory
+    int usedSize;   //!< The used size of the memory
+    int mutex;      //!< The mutex of the memory, to guarantee the unicity of the access to the memory
+    Header begin;   //!< The first element of the list of blocks
+    Header end;     //!< The last element of the list of blocks
 }Memory;
 
 // functions

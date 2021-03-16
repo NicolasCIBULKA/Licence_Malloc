@@ -1,3 +1,12 @@
+/**
+ * @file ipcTools.c
+ * @author Nicolas CIBULKA - Kevin BERNARD - Aelien MOUBECHE 
+ * @brief This file helps to manage icp Semaphores and mutex
+ * @version 0.1
+ * @date 2021-03-15
+ * 
+ * @copyright Copyright (c) 2021
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>
@@ -9,7 +18,7 @@
 #include <sys/shm.h>
 #include <sys/msg.h>
 #include <string.h>
-// STRUCTURES
+
 #define SIZE 1024
 
 static struct{
@@ -20,6 +29,13 @@ static struct{
 
 // CODE FONCTIONS
 
+/**
+ * @brief This function create a semaphore
+ * 
+ * @param key A key to guarantee the unicity of the Semaphore
+ * @param valInit The value that will contains the semaphore when it will be initialise
+ * @return an Integer that will be the semaphore identifier
+ */
 int semalloc(key_t key, int valInit){
     int semid = semget(key, 1, 0);
     if(semid == -1){
@@ -34,26 +50,52 @@ int semalloc(key_t key, int valInit){
     return semid;
 }
 
-// decrementation
+/**
+ * @brief This function increments the value of the semaphore
+ * 
+ * @param semid The Identifier of the Semaphore
+ */
 void P(int semid){
     struct sembuf sP = {0,-1,0};
     semop(semid, &sP, 1);
 }
 
-// incrementation
+/**
+ * @brief This function decrements the semaphore value
+ * 
+ * @param semid The indentifier of the semaphore
+ */
 void V(int semid){
     struct sembuf sP = {0,1,0};
     semop(semid, &sP, 1);
 }
 
+/**
+ * @brief This function destroy the semaphore
+ * 
+ * @param semid The identifier of the semaphore
+ * @return an Integer with the value -1 if a problem occured, 0 if not
+ */
 int semfree(int semid){
     return semctl(semid, 0, IPC_RMID, 0);
 }
 
+/**
+ * @brief This function allocate a Mutex
+ * 
+ * @param key a key_t variable to guarantee the unicity of the mutex
+ * @return An Integer which is the mutex identifier
+ */
 int mutalloc(key_t key){
     return semalloc(key, 1);
 }
 
+/**
+ * @brief this function desallocate a Mutex 
+ * 
+ * @param semid The identifier of the Mutex
+ * @return An Integer with the value -1 if an error occured, 0 if not
+ */
 int mutfree(int semid){
     return semctl(semid, 0, IPC_RMID, 0);
 }
