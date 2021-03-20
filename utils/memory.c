@@ -98,6 +98,7 @@ void* myAlloc(int size){
     header->next = NULL;
     header->size = size;
     header->isFree = 0;
+    memory.usedSize += size;
 
     // put memory block in the Memory
     if(memory.begin == NULL){
@@ -120,7 +121,41 @@ void* myAlloc(int size){
  * @return an Integer the size of the memory removed
  */
 
-int myFree(void* p){
+int myFree(void *p)
+{
+    Header header;
+    Header tmp;
+    void *progBreak;
+
+    // test that p is a block
+    if (!p){
+        return 1;
+    }
+    // starting a critical section
+    P(memory.mutex);
     
+    header = (Header*)p - 1;
+    progBreak = sbrk(0);
+
+    if ((char*)p + header->size == progBreak) {
+        if (memory.begin == memory.end) {
+            memory.begin = memory.end = NULL;
+        } else {
+            tmp = memory.begin;
+            while (tmp) {
+                if(tmp->next == memory.end) {
+                    tmp->next = NULL;
+                    memory.end = tmp;
+                }
+                tmp = tmp->next;
+            }
+        }
+        memory.usedSize -= header->size;
+        sbrk(0 - sizeof(header) - header->size);
+        V(memory.mutex);
+        return 0;
+    }
+    header->isFree = 1;
+    V(memory.mutex);
 }
 

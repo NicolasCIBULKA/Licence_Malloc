@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "utils/memory.h"
 
 
@@ -13,6 +14,7 @@ int main(int argc, char const *argv[])
 
    // allocation avec myAlloc
    int* tab = myAlloc(sizeof(int) * 10);
+
    if(tab == NULL){
       perror("erreur d'allocation memoire\n");
       exit(2);
@@ -25,8 +27,7 @@ int main(int argc, char const *argv[])
 
    // Liberation tableau
    myFree(tab);
-
-   // Liberation structure
+   // Liberation st ructure
    freeMemory();
    
    return 0;
