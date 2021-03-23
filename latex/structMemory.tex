@@ -1,0 +1,47 @@
+\hypertarget{structMemory}{}\section{Memory Struct Reference}
+\label{structMemory}\index{Memory@{Memory}}
+
+
+The structure of the \hyperlink{structMemory}{Memory}.  
+
+
+
+
+{\ttfamily \#include $<$memory.\+h$>$}
+
+
+
+Collaboration diagram for Memory\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=162pt]{structMemory__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structMemory_a168856d0599e2430a961979a4ca204d0}\label{structMemory_a168856d0599e2430a961979a4ca204d0}} 
+int \hyperlink{structMemory_a168856d0599e2430a961979a4ca204d0}{total\+Size}
+\begin{DoxyCompactList}\small\item\em The total size of the memory. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structMemory_a719ceb2b6e7f494de7673fc5bacc02f8}\label{structMemory_a719ceb2b6e7f494de7673fc5bacc02f8}} 
+int \hyperlink{structMemory_a719ceb2b6e7f494de7673fc5bacc02f8}{used\+Size}
+\begin{DoxyCompactList}\small\item\em The used size of the memory. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structMemory_a9dd2c85715ec465afbefc0ce63c2cde8}\label{structMemory_a9dd2c85715ec465afbefc0ce63c2cde8}} 
+int \hyperlink{structMemory_a9dd2c85715ec465afbefc0ce63c2cde8}{mutex}
+\begin{DoxyCompactList}\small\item\em The mutex of the memory, to guarantee the unicity of the access to the memory. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structMemory_aecc2163eec0b2330f6e8ce789c5be7e7}\label{structMemory_aecc2163eec0b2330f6e8ce789c5be7e7}} 
+\hyperlink{structcell}{Header} \hyperlink{structMemory_aecc2163eec0b2330f6e8ce789c5be7e7}{begin}
+\begin{DoxyCompactList}\small\item\em The first element of the list of blocks. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structMemory_a9a998f6b2dacb93d29e771cab9ef9854}\label{structMemory_a9a998f6b2dacb93d29e771cab9ef9854}} 
+\hyperlink{structcell}{Header} \hyperlink{structMemory_a9a998f6b2dacb93d29e771cab9ef9854}{end}
+\begin{DoxyCompactList}\small\item\em The last element of the list of blocks. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The structure of the \hyperlink{structMemory}{Memory}. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+utils/memory.\+h\end{DoxyCompactItemize}

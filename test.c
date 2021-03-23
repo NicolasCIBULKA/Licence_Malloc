@@ -14,7 +14,10 @@ int main(int argc, char const *argv[])
 
    // allocation avec myAlloc
    int* tab = myAlloc(sizeof(int) * 10);
-
+   int* tab2 = myAlloc(sizeof(int)*32);
+   
+   myFree(tab2);
+   
    if(tab == NULL){
       perror("erreur d'allocation memoire\n");
       exit(2);

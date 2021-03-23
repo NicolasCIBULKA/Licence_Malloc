@@ -117,10 +117,9 @@ void* myAlloc(int size){
 /**
  * @brief The Function that free the memory block given in parameter 
  * 
- * @param p The pointerto the data block
+ * @param p The pointer to the data block
  * @return an Integer the size of the memory removed
  */
-
 int myFree(void *p)
 {
     Header header;

@@ -22,7 +22,7 @@ structures.o: ./utils/structures.c ./utils/structures.h
 	gcc -c ./utils/structures.c
 
 doc :
-	doxygen 
+	doxygen Doxyfile
 
 clear :
 	rm -f *.o test main

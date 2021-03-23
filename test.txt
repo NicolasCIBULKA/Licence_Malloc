@@ -1,0 +1,7 @@
+init ( 300 )
+test alloc ( 50 )
+test2 alloc ( 4 )
+test3 alloc ( 20 )
+free ( test2 )
+free ( test )
+close ()
