@@ -14,15 +14,73 @@
 #include "ipcTools.h"
 
 /**
- * @brief This function will intialise a header for a data block with a given size for the data
+ * @brief This function will
  * 
  * @param size the size of the allocated data block
  * @return the header of the data block
  */
-Header initHeader(int size){
-    Header header;
-    header->isFree = 1;
-    header->size = size;
-    return header;
+
+
+// ----- PaginationUnit Functions -----
+
+/**
+ * @brief Initialise an empty PaginationUnit
+ * 
+ * @return PaginationUnit 
+ */
+PaginationUnit initPaginationUnit(){
+    PaginationUnit unit;
+    unit.isFree = 0;
+    unit.size = 0;
+    unit.zoneStart = NULL;
+    unit.zoneEnd = NULL;
+    return unit;
 }
 
+/**
+ * @brief reset a given paginationUnit
+ * 
+ * @param unit : THe unit that will be reset
+ */
+void resetPaginationUnit(PaginationUnit* unit){
+    unit->isFree = 0;
+    unit->size = 0;
+    unit->zoneStart = NULL;
+    unit->zoneEnd = NULL;
+}
+
+
+
+
+// ----- DataRibbon Functions -----
+
+
+/**
+ * @brief Initialise the Data Ribbon that will contains all our values
+ * 
+ * @param size The size of the Ribbon
+ * @return DataRibbon : the array that will contains all our data
+ */
+DataRibbon initDataRibbon(int size){
+    DataRibbon ribbon;
+    ribbon.size = size;
+    ribbon.usedSize = 0;
+    ribbon.ribbon = malloc(sizeof(void*) * size);
+    ribbon.allocatedMap = malloc((sizeof(int) * size));
+    for(int i = 0; i < size; i++){
+        ribbon.allocatedMap[i] = 0;
+    }
+    return ribbon;
+}
+
+/**
+ * @brief Free a given DataRibbon
+ * 
+ * @param ribbon : The Ribbon that will be released
+ */
+void freeDataRibbon(DataRibbon* ribbon){
+    ribbon->size =0;
+    ribbon->usedSize =0;
+    free(ribbon->ribbon);
+    free(ribbon->allocatedMap);
+}

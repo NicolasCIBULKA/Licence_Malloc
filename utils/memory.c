@@ -10,6 +10,7 @@
  */
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include "memory.h"
@@ -27,20 +28,26 @@ Memory memory;
  * @param n Represent the size of the great structure that will contains all the allocated elements
  * @return An Integer that will be 0 if an error occured, or the size given in parameter if the operation succeed 
  */
-int initMemory(int n){
-    if(isMemoryFree()){
-        // initialise the memory
-        memory.usedSize = 0;
-        memory.totalSize = n;
-        memory.begin = NULL;
-        memory.end = NULL;
-        // mutex to guarantee a unique access to memory
-        key_t key = ftok("/etc/passwd", 10);
-        memory.mutex = mutalloc(key);
-        return n;
+int initMemory(int size){
+    key_t key = ftok("/etc/passwd", 5);
+    if(key == -1){
+        return 0;
     }
-    return 0;
-}
+    memory.mutex = mutalloc(key);
+    memory.paginationPage = malloc(sizeof(PaginationUnit)*size);
+    if(memory.paginationPage == NULL){
+        return 0;
+    }
+    for(int i = 0; i < size; i++){
+        memory.paginationPage[i] = initPaginationUnit();
+    }
+    memory.dataArray = initDataRibbon(size);
+    if(memory.dataArray.ribbon == NULL){
+        return 0;
+    }
+    return size;
+    
+}   
 
 /**
  * @brief This function will free the great Memory structure
@@ -48,20 +55,9 @@ int initMemory(int n){
  * @return An Integer that wille be the size that the function has got back, or -1 if an error occured
  */
 int freeMemory(){
-    // free the mutex
+    freeDataRibbon(&(memory.dataArray));
+    free(memory.paginationPage);
     mutfree(memory.mutex);
-}
-
-/**
- * @brief This function will check if the great Memory structure is empty
- * 
- * @return An Integer that is 1 if the structure is empty, 0 if not
- */
-int isMemoryFree(){
-    if(memory.begin == NULL && memory.end == NULL){
-        return 1;
-    }
-    return 0;
 }
 
 /**
@@ -71,47 +67,39 @@ int isMemoryFree(){
  * @return A void* which is the adress of the data block
  */
 void* myAlloc(int size){
-    // initiate variables
-    void* block;
-    Header header;
     
-    // test that size is positive
-    if(size < 0 || memory.usedSize+size > memory.totalSize){
+    P(memory.mutex);
+    
+    if(memory.dataArray.usedSize + size > memory.dataArray.size){
+        V(memory.mutex);
         return NULL;
     }
-
-    // starting a critical section
-    P(memory.mutex);
-
-    // allocating memory for datas
-    int totalSize = sizeof(header) + size;
-    block = sbrk(totalSize);
-
-    // if error in allocation, exit
-    if(block == (void*) -1){
+    
+    PaginationUnit *unit = getFirstPaginationUnit();
+    if(unit == NULL){
         V(memory.mutex);
         return NULL;
     }
 
-    // set memory block & fill header
-    header = block;
-    header->next = NULL;
-    header->size = size;
-    header->isFree = 0;
-    memory.usedSize += size;
-
-    // put memory block in the Memory
-    if(memory.begin == NULL){
-        memory.begin = header;
+    void* firstAdress = memory.dataArray.ribbon;
+    void* startBlock =  getBestFit(size);
+    
+    if(startBlock == NULL){
+        V(memory.mutex);
+        return NULL;
     }
-    if(memory.end != NULL){
-        memory.end->next = header;
-    }
-    memory.end = header;
 
-    // end of critical section
+    int pos = startBlock - firstAdress;
+    actualizeAllocatedMap(pos, size);
+
+    unit->isFree = 0;
+    unit->size = size;
+    unit->zoneStart = startBlock;
+    unit->zoneEnd = startBlock+size;
+
+    memory.dataArray.usedSize += size;
     V(memory.mutex);
-    return (void*) header+(sizeof(header));
+    return unit->zoneStart;
 }
 
 /**
@@ -122,39 +110,97 @@ void* myAlloc(int size){
  */
 int myFree(void *p)
 {
-    Header header;
-    Header tmp;
-    void *progBreak;
-
-    // test that p is a block
-    if (!p){
-        return 1;
-    }
-    // starting a critical section
     P(memory.mutex);
-    
-    header = (Header*)p - 1;
-    progBreak = sbrk(0);
-
-    if ((char*)p + header->size == progBreak) {
-        if (memory.begin == memory.end) {
-            memory.begin = memory.end = NULL;
-        } else {
-            tmp = memory.begin;
-            while (tmp) {
-                if(tmp->next == memory.end) {
-                    tmp->next = NULL;
-                    memory.end = tmp;
-                }
-                tmp = tmp->next;
-            }
+    for(int i = 0; i < memory.dataArray.size; i++){
+        if(memory.paginationPage[i].zoneStart == p){
+            int size = memory.paginationPage[i].size;
+            void* startMem = &memory.dataArray.ribbon[0];
+            int startZone = startMem - memory.paginationPage[i].zoneStart;
+            resetAllocatedMap(startZone, size);
+            resetPaginationUnit(&memory.paginationPage[i]);
+            memory.dataArray.usedSize-=size;
+            V(memory.mutex);
+            return size;
         }
-        memory.usedSize -= header->size;
-        sbrk(0 - sizeof(header) - header->size);
-        V(memory.mutex);
-        return 0;
-    }
-    header->isFree = 1;
-    V(memory.mutex);
+    }    
 }
 
+
+/**
+ * @brief Get the First Pagination Unit object
+ * 
+ * @return PaginationUnit* 
+ */
+PaginationUnit* getFirstPaginationUnit(){
+    for(int i = 0; i < memory.dataArray.size; i++){
+        if(memory.paginationPage[i].isFree == 0){
+            return &(memory.paginationPage[i]);
+        }
+        i++;
+    }
+    return NULL;
+}
+
+/**
+ * @brief Get the adress of the first element of the dataArray that would have enough place after
+ * This according to the best Fit Algorithm
+ * @param size The needed size for the block 
+ * @return void* : The adress of the first element of the block
+ */
+void* getBestFit(int size){
+    // tableau d'indice de tout les espaces mémoires
+    // on retire tout les espaces mémoires utilisés
+    // on trouve le plus petit qui convient
+    int deltaSize = memory.dataArray.size + 1;
+    void* adress = NULL;
+    int cursor = 0;
+    if(memory.dataArray.usedSize == 0){
+        adress = memory.dataArray.ribbon[0];
+    }
+
+    while(cursor < memory.dataArray.size){
+        if(memory.dataArray.allocatedMap[cursor] == 0){
+            int tempCursor = cursor;
+            int tempSize = 0;
+            do{
+                tempSize++;
+                tempCursor++;  
+            }while(memory.dataArray.allocatedMap[tempCursor] != 1 && tempCursor < memory.dataArray.size);
+
+            if(tempSize > size && deltaSize > (tempSize - size)){
+                adress = &memory.dataArray.ribbon[cursor];
+                deltaSize = tempSize - size;
+            }
+            cursor = tempCursor;
+        }
+        cursor++;
+    }
+    
+    return adress;
+}
+
+/**
+ * @brief This function will update the map of allocatedAdress, to help bestFit Algorithm later.
+ * This will turn all the elements in the aimed area in 1 to say that those elements are allocoated
+ * 
+ * @param startPos : the starting position of the allocated area
+ * @param size : the size of the allocated area
+ */
+void actualizeAllocatedMap(int startPos, int size){
+    for(int i = startPos; i < startPos+size; i++){
+        memory.dataArray.allocatedMap[i] = 1;
+    }
+}
+
+/**
+ * @brief This function will update the map of allocatedAdress, to help bestFit Algorithm later.
+ * This will turn all the elements in the aimed area in 0 to say that those elements are now released
+ * 
+ * @param startPos 
+ * @param size 
+ */
+void resetAllocatedMap(int startPos, int size){
+    for(int i = startPos; i < startPos+size; i++){
+        memory.dataArray.allocatedMap[i] = 0;
+    }
+}

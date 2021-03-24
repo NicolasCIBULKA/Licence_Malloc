@@ -7,22 +7,28 @@
  * 
  */
 typedef struct{
-    int totalSize;  //!< The total size of the memory
-    int usedSize;   //!< The used size of the memory
-    int mutex;      //!< The mutex of the memory, to guarantee the unicity of the access to the memory
-    Header begin;   //!< The first element of the list of blocks
-    Header end;     //!< The last element of the list of blocks
+    PaginationUnit* paginationPage;
+    DataRibbon dataArray;
+    int mutex;
+
 }Memory;
 
-// functions
+// ----- Usable functions -----
 
-int initMemory(int);
+int initMemory(int size);
 
 int freeMemory();
-
-int isMemoryFree();
 
 void* myAlloc(int);
 
 int myFree(void*);
 
+// ----- Helpful functions -----
+
+PaginationUnit* getFirstPaginationUnit();
+
+void* getBestFit(int size);
+
+void actualizeAllocatedMap(int startPos, int size);
+
+void resetAllocatedMap(int startPos, int size);
