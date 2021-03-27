@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['mutalloc',['mutalloc',['../ipcTools_8c.html#a88d7899467093e27a485527986aad253',1,'ipcTools.c']]],
-  ['mutfree',['mutfree',['../ipcTools_8c.html#a518dd2f4cfca662050363c790fb88972',1,'ipcTools.c']]],
-  ['myalloc',['myAlloc',['../memory_8c.html#ad2337efa36c02f3d7e198fd2154a2d6a',1,'memory.c']]],
-  ['myfree',['myFree',['../memory_8c.html#aeedb1fea6edab8d3c622675777ccd312',1,'memory.c']]]
+  ['getbestfit',['getBestFit',['../memory_8c.html#a053ccff0042bef6fb33d55231236bbe9',1,'memory.c']]],
+  ['getfirstpaginationunit',['getFirstPaginationUnit',['../memory_8c.html#aba9b1a029767f29ea614baff4aa1d6a9',1,'memory.c']]]
 ];

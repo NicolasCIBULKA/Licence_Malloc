@@ -13,14 +13,6 @@
 #include "structures.h"
 #include "ipcTools.h"
 
-/**
- * @brief This function will
- * 
- * @param size the size of the allocated data block
- * @return the header of the data block
- */
-
-
 // ----- PaginationUnit Functions -----
 
 /**
@@ -49,11 +41,7 @@ void resetPaginationUnit(PaginationUnit* unit){
     unit->zoneEnd = NULL;
 }
 
-
-
-
 // ----- DataRibbon Functions -----
-
 
 /**
  * @brief Initialise the Data Ribbon that will contains all our values

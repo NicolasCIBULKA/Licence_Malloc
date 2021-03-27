@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>My Project: cell Struct Reference</title>
+<title>My Project: PaginationUnit Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -60,41 +60,38 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structcell-members.html">List of all members</a>  </div>
+<a href="structPaginationUnit-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">cell Struct Reference</div>  </div>
+<div class="title">PaginationUnit Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>The structure for a header block.  
- <a href="structcell.html#details">More...</a></p>
+<p>The structure for a pagination Unit.  
+ <a href="structPaginationUnit.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="structures_8h_source.html">structures.h</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for cell:</div>
-<div class="dyncontent">
-<div class="center"><img src="structcell__coll__graph.png" border="0" usemap="#cell_coll__map" alt="Collaboration graph"/></div>
-<map name="cell_coll__map" id="cell_coll__map">
-</map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:afe50d62a094b090ae2817026c0830c60"><td class="memItemLeft" align="right" valign="top"><a id="afe50d62a094b090ae2817026c0830c60"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcell.html#afe50d62a094b090ae2817026c0830c60">size</a></td></tr>
-<tr class="memdesc:afe50d62a094b090ae2817026c0830c60"><td class="mdescLeft">&#160;</td><td class="mdescRight">The size of the data block. <br /></td></tr>
-<tr class="separator:afe50d62a094b090ae2817026c0830c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0d53a07c723b6a5eddff646b4f2d09f"><td class="memItemLeft" align="right" valign="top"><a id="af0d53a07c723b6a5eddff646b4f2d09f"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcell.html#af0d53a07c723b6a5eddff646b4f2d09f">isFree</a></td></tr>
-<tr class="memdesc:af0d53a07c723b6a5eddff646b4f2d09f"><td class="mdescLeft">&#160;</td><td class="mdescRight">a boolean to say of the block is free or not <br /></td></tr>
-<tr class="separator:af0d53a07c723b6a5eddff646b4f2d09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f9c7a2efcdc3d026190df2056c614f3"><td class="memItemLeft" align="right" valign="top"><a id="a2f9c7a2efcdc3d026190df2056c614f3"></a>
-struct <a class="el" href="structcell.html">cell</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcell.html#a2f9c7a2efcdc3d026190df2056c614f3">next</a></td></tr>
-<tr class="memdesc:a2f9c7a2efcdc3d026190df2056c614f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">the adress of the next block of data <br /></td></tr>
-<tr class="separator:a2f9c7a2efcdc3d026190df2056c614f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49ee506112f8f9312df1559ed19db153"><td class="memItemLeft" align="right" valign="top"><a id="a49ee506112f8f9312df1559ed19db153"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPaginationUnit.html#a49ee506112f8f9312df1559ed19db153">isFree</a></td></tr>
+<tr class="memdesc:a49ee506112f8f9312df1559ed19db153"><td class="mdescLeft">&#160;</td><td class="mdescRight">say if the pagination reference an allocated Zone <br /></td></tr>
+<tr class="separator:a49ee506112f8f9312df1559ed19db153"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b8f88cdc323227eae2dd8438ebfd063"><td class="memItemLeft" align="right" valign="top"><a id="a7b8f88cdc323227eae2dd8438ebfd063"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPaginationUnit.html#a7b8f88cdc323227eae2dd8438ebfd063">size</a></td></tr>
+<tr class="memdesc:a7b8f88cdc323227eae2dd8438ebfd063"><td class="mdescLeft">&#160;</td><td class="mdescRight">size of the allocated Zone <br /></td></tr>
+<tr class="separator:a7b8f88cdc323227eae2dd8438ebfd063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6188b221501c30dfe236902f2b4e044"><td class="memItemLeft" align="right" valign="top"><a id="ad6188b221501c30dfe236902f2b4e044"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPaginationUnit.html#ad6188b221501c30dfe236902f2b4e044">zoneStart</a></td></tr>
+<tr class="memdesc:ad6188b221501c30dfe236902f2b4e044"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to the beginning of the allocated Zone <br /></td></tr>
+<tr class="separator:ad6188b221501c30dfe236902f2b4e044"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c06b5b49fcc57f23808a8e5a3e5f394"><td class="memItemLeft" align="right" valign="top"><a id="a4c06b5b49fcc57f23808a8e5a3e5f394"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPaginationUnit.html#a4c06b5b49fcc57f23808a8e5a3e5f394">zoneEnd</a></td></tr>
+<tr class="memdesc:a4c06b5b49fcc57f23808a8e5a3e5f394"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to the end of the allocated Zone <br /></td></tr>
+<tr class="separator:a4c06b5b49fcc57f23808a8e5a3e5f394"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The structure for a header block. </p>
+<div class="textblock"><p>The structure for a pagination Unit. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>utils/<a class="el" href="structures_8h_source.html">structures.h</a></li>
 </ul>

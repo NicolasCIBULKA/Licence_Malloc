@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['totalsize',['totalSize',['../structMemory.html#a168856d0599e2430a961979a4ca204d0',1,'Memory']]]
+  ['size',['size',['../structPaginationUnit.html#a7b8f88cdc323227eae2dd8438ebfd063',1,'PaginationUnit::size()'],['../structDataRibbon.html#a73207b4f107779b04d8657658b734495',1,'DataRibbon::size()']]]
 ];

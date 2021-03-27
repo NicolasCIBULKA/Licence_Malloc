@@ -7,6 +7,7 @@ This file is the .c that allow to do all the operations of allocation/free on th
 
 {\ttfamily \#include $<$stdio.\+h$>$}\newline
 {\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
 {\ttfamily \#include $<$sys/types.\+h$>$}\newline
 {\ttfamily \#include $<$sys/ipc.\+h$>$}\newline
 {\ttfamily \#include \char`\"{}memory.\+h\char`\"{}}\newline
@@ -22,16 +23,22 @@ Include dependency graph for memory.\+c\+:
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \hyperlink{memory_8c_a5df4317aff70840e02b8dd3292204eeb}{init\+Memory} (int n)
+int \hyperlink{memory_8c_a10ddc18ec8b4edd1c9d5a0c2ebb71cda}{init\+Memory} (int size)
 \begin{DoxyCompactList}\small\item\em Function to initiate the memory list. \end{DoxyCompactList}\item 
 int \hyperlink{memory_8c_a8d862dc01c44bfabc8d952bb77f8da89}{free\+Memory} ()
 \begin{DoxyCompactList}\small\item\em This function will free the great \hyperlink{structMemory}{Memory} structure. \end{DoxyCompactList}\item 
-int \hyperlink{memory_8c_ab55505683a55b5134953d6e1ccb3bef4}{is\+Memory\+Free} ()
-\begin{DoxyCompactList}\small\item\em This function will check if the great \hyperlink{structMemory}{Memory} structure is empty. \end{DoxyCompactList}\item 
 void $\ast$ \hyperlink{memory_8c_ad2337efa36c02f3d7e198fd2154a2d6a}{my\+Alloc} (int size)
 \begin{DoxyCompactList}\small\item\em This function will do the allocation of a block, according to the size given in parameter. \end{DoxyCompactList}\item 
 int \hyperlink{memory_8c_aeedb1fea6edab8d3c622675777ccd312}{my\+Free} (void $\ast$p)
-\begin{DoxyCompactList}\small\item\em The Function that free the memory block given in parameter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em The Function that free the memory area given in parameter. \end{DoxyCompactList}\item 
+\hyperlink{structPaginationUnit}{Pagination\+Unit} $\ast$ \hyperlink{memory_8c_aba9b1a029767f29ea614baff4aa1d6a9}{get\+First\+Pagination\+Unit} ()
+\begin{DoxyCompactList}\small\item\em Get the adress of the First free Pagination Unit. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{memory_8c_a053ccff0042bef6fb33d55231236bbe9}{get\+Best\+Fit} (int size)
+\begin{DoxyCompactList}\small\item\em Get the adress of the first element of the data\+Array that would have enough place after This according to the best Fit Algorithm. \end{DoxyCompactList}\item 
+void \hyperlink{memory_8c_abc38fc84b1593301b41e5d411500814e}{actualize\+Allocated\+Map} (int start\+Pos, int size)
+\begin{DoxyCompactList}\small\item\em This function will update the map of allocated\+Adress, to help best\+Fit Algorithm later. This will turn all the elements in the aimed area in 1 to say that those elements are allocoated. \end{DoxyCompactList}\item 
+void \hyperlink{memory_8c_a778926f90d7c9d349798358e05c10e90}{reset\+Allocated\+Map} (int start\+Pos, int size)
+\begin{DoxyCompactList}\small\item\em This function will update the map of allocated\+Adress, to help best\+Fit Algorithm later. This will turn all the elements in the aimed area in 0 to say that those elements are now released. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
@@ -58,6 +65,23 @@ Copyright (c) 2021
 
 
 \subsection{Function Documentation}
+\mbox{\Hypertarget{memory_8c_abc38fc84b1593301b41e5d411500814e}\label{memory_8c_abc38fc84b1593301b41e5d411500814e}} 
+\index{memory.\+c@{memory.\+c}!actualize\+Allocated\+Map@{actualize\+Allocated\+Map}}
+\index{actualize\+Allocated\+Map@{actualize\+Allocated\+Map}!memory.\+c@{memory.\+c}}
+\subsubsection{\texorpdfstring{actualize\+Allocated\+Map()}{actualizeAllocatedMap()}}
+{\footnotesize\ttfamily void actualize\+Allocated\+Map (\begin{DoxyParamCaption}\item[{int}]{start\+Pos,  }\item[{int}]{size }\end{DoxyParamCaption})}
+
+
+
+This function will update the map of allocated\+Adress, to help best\+Fit Algorithm later. This will turn all the elements in the aimed area in 1 to say that those elements are allocoated. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start\+Pos} & \+: the starting position of the allocated area \\
+\hline
+{\em size} & \+: the size of the allocated area \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{memory_8c_a8d862dc01c44bfabc8d952bb77f8da89}\label{memory_8c_a8d862dc01c44bfabc8d952bb77f8da89}} 
 \index{memory.\+c@{memory.\+c}!free\+Memory@{free\+Memory}}
 \index{free\+Memory@{free\+Memory}!memory.\+c@{memory.\+c}}
@@ -71,11 +95,42 @@ This function will free the great \hyperlink{structMemory}{Memory} structure.
 \begin{DoxyReturn}{Returns}
 An Integer that wille be the size that the function has got back, or -\/1 if an error occured 
 \end{DoxyReturn}
-\mbox{\Hypertarget{memory_8c_a5df4317aff70840e02b8dd3292204eeb}\label{memory_8c_a5df4317aff70840e02b8dd3292204eeb}} 
+\mbox{\Hypertarget{memory_8c_a053ccff0042bef6fb33d55231236bbe9}\label{memory_8c_a053ccff0042bef6fb33d55231236bbe9}} 
+\index{memory.\+c@{memory.\+c}!get\+Best\+Fit@{get\+Best\+Fit}}
+\index{get\+Best\+Fit@{get\+Best\+Fit}!memory.\+c@{memory.\+c}}
+\subsubsection{\texorpdfstring{get\+Best\+Fit()}{getBestFit()}}
+{\footnotesize\ttfamily void$\ast$ get\+Best\+Fit (\begin{DoxyParamCaption}\item[{int}]{size }\end{DoxyParamCaption})}
+
+
+
+Get the adress of the first element of the data\+Array that would have enough place after This according to the best Fit Algorithm. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & The needed size for the block \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void$\ast$ \+: The adress of the first element of the block 
+\end{DoxyReturn}
+\mbox{\Hypertarget{memory_8c_aba9b1a029767f29ea614baff4aa1d6a9}\label{memory_8c_aba9b1a029767f29ea614baff4aa1d6a9}} 
+\index{memory.\+c@{memory.\+c}!get\+First\+Pagination\+Unit@{get\+First\+Pagination\+Unit}}
+\index{get\+First\+Pagination\+Unit@{get\+First\+Pagination\+Unit}!memory.\+c@{memory.\+c}}
+\subsubsection{\texorpdfstring{get\+First\+Pagination\+Unit()}{getFirstPaginationUnit()}}
+{\footnotesize\ttfamily \hyperlink{structPaginationUnit}{Pagination\+Unit}$\ast$ get\+First\+Pagination\+Unit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the adress of the First free Pagination Unit. 
+
+\begin{DoxyReturn}{Returns}
+Pagination\+Unit$\ast$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{memory_8c_a10ddc18ec8b4edd1c9d5a0c2ebb71cda}\label{memory_8c_a10ddc18ec8b4edd1c9d5a0c2ebb71cda}} 
 \index{memory.\+c@{memory.\+c}!init\+Memory@{init\+Memory}}
 \index{init\+Memory@{init\+Memory}!memory.\+c@{memory.\+c}}
 \subsubsection{\texorpdfstring{init\+Memory()}{initMemory()}}
-{\footnotesize\ttfamily int init\+Memory (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int init\+Memory (\begin{DoxyParamCaption}\item[{int}]{size }\end{DoxyParamCaption})}
 
 
 
@@ -88,19 +143,6 @@ Function to initiate the memory list.
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 An Integer that will be 0 if an error occured, or the size given in parameter if the operation succeed 
-\end{DoxyReturn}
-\mbox{\Hypertarget{memory_8c_ab55505683a55b5134953d6e1ccb3bef4}\label{memory_8c_ab55505683a55b5134953d6e1ccb3bef4}} 
-\index{memory.\+c@{memory.\+c}!is\+Memory\+Free@{is\+Memory\+Free}}
-\index{is\+Memory\+Free@{is\+Memory\+Free}!memory.\+c@{memory.\+c}}
-\subsubsection{\texorpdfstring{is\+Memory\+Free()}{isMemoryFree()}}
-{\footnotesize\ttfamily int is\+Memory\+Free (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
-
-
-
-This function will check if the great \hyperlink{structMemory}{Memory} structure is empty. 
-
-\begin{DoxyReturn}{Returns}
-An Integer that is 1 if the structure is empty, 0 if not 
 \end{DoxyReturn}
 \mbox{\Hypertarget{memory_8c_ad2337efa36c02f3d7e198fd2154a2d6a}\label{memory_8c_ad2337efa36c02f3d7e198fd2154a2d6a}} 
 \index{memory.\+c@{memory.\+c}!my\+Alloc@{my\+Alloc}}
@@ -128,13 +170,30 @@ A void$\ast$ which is the adress of the data block
 
 
 
-The Function that free the memory block given in parameter. 
+The Function that free the memory area given in parameter. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em p} & The pointerto the data block \\
+{\em p} & The pointer to the data block \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 an Integer the size of the memory removed 
 \end{DoxyReturn}
+\mbox{\Hypertarget{memory_8c_a778926f90d7c9d349798358e05c10e90}\label{memory_8c_a778926f90d7c9d349798358e05c10e90}} 
+\index{memory.\+c@{memory.\+c}!reset\+Allocated\+Map@{reset\+Allocated\+Map}}
+\index{reset\+Allocated\+Map@{reset\+Allocated\+Map}!memory.\+c@{memory.\+c}}
+\subsubsection{\texorpdfstring{reset\+Allocated\+Map()}{resetAllocatedMap()}}
+{\footnotesize\ttfamily void reset\+Allocated\+Map (\begin{DoxyParamCaption}\item[{int}]{start\+Pos,  }\item[{int}]{size }\end{DoxyParamCaption})}
+
+
+
+This function will update the map of allocated\+Adress, to help best\+Fit Algorithm later. This will turn all the elements in the aimed area in 0 to say that those elements are now released. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start\+Pos} & \+: the starting position of the allocated area \\
+\hline
+{\em size} & \+: the size of the allocated area \\
+\hline
+\end{DoxyParams}

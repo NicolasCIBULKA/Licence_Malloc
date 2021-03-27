@@ -16,27 +16,21 @@ Collaboration diagram for Memory\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=162pt]{structMemory__coll__graph}
+\includegraphics[width=247pt]{structMemory__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{structMemory_a168856d0599e2430a961979a4ca204d0}\label{structMemory_a168856d0599e2430a961979a4ca204d0}} 
-int \hyperlink{structMemory_a168856d0599e2430a961979a4ca204d0}{total\+Size}
-\begin{DoxyCompactList}\small\item\em The total size of the memory. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{structMemory_a719ceb2b6e7f494de7673fc5bacc02f8}\label{structMemory_a719ceb2b6e7f494de7673fc5bacc02f8}} 
-int \hyperlink{structMemory_a719ceb2b6e7f494de7673fc5bacc02f8}{used\+Size}
-\begin{DoxyCompactList}\small\item\em The used size of the memory. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structMemory_a5c5421773412071a94ba3d7acb323277}\label{structMemory_a5c5421773412071a94ba3d7acb323277}} 
+\hyperlink{structPaginationUnit}{Pagination\+Unit} $\ast$ \hyperlink{structMemory_a5c5421773412071a94ba3d7acb323277}{pagination\+Page}
+\begin{DoxyCompactList}\small\item\em Arrays of \hyperlink{structPaginationUnit}{Pagination\+Unit}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structMemory_ab49ab47b347264b74c7ce8252ffd4850}\label{structMemory_ab49ab47b347264b74c7ce8252ffd4850}} 
+\hyperlink{structDataRibbon}{Data\+Ribbon} \hyperlink{structMemory_ab49ab47b347264b74c7ce8252ffd4850}{data\+Array}
+\begin{DoxyCompactList}\small\item\em Structure that contains the data. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structMemory_a9dd2c85715ec465afbefc0ce63c2cde8}\label{structMemory_a9dd2c85715ec465afbefc0ce63c2cde8}} 
 int \hyperlink{structMemory_a9dd2c85715ec465afbefc0ce63c2cde8}{mutex}
-\begin{DoxyCompactList}\small\item\em The mutex of the memory, to guarantee the unicity of the access to the memory. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{structMemory_aecc2163eec0b2330f6e8ce789c5be7e7}\label{structMemory_aecc2163eec0b2330f6e8ce789c5be7e7}} 
-\hyperlink{structcell}{Header} \hyperlink{structMemory_aecc2163eec0b2330f6e8ce789c5be7e7}{begin}
-\begin{DoxyCompactList}\small\item\em The first element of the list of blocks. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{structMemory_a9a998f6b2dacb93d29e771cab9ef9854}\label{structMemory_a9a998f6b2dacb93d29e771cab9ef9854}} 
-\hyperlink{structcell}{Header} \hyperlink{structMemory_a9a998f6b2dacb93d29e771cab9ef9854}{end}
-\begin{DoxyCompactList}\small\item\em The last element of the list of blocks. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Mutex that will guarantee the unicity of the access. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}

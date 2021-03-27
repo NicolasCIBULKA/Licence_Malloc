@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['freememory',['freeMemory',['../memory_8c.html#a8d862dc01c44bfabc8d952bb77f8da89',1,'memory.c']]]
+  ['actualizeallocatedmap',['actualizeAllocatedMap',['../memory_8c.html#abc38fc84b1593301b41e5d411500814e',1,'memory.c']]]
 ];

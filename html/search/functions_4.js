@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['semalloc',['semalloc',['../ipcTools_8c.html#a45c8a1cc742b770f79825e79aa0c8ce7',1,'ipcTools.c']]],
-  ['semfree',['semfree',['../ipcTools_8c.html#a1a1666796045a3210edd37d16b0f9625',1,'ipcTools.c']]]
+  ['mutalloc',['mutalloc',['../ipcTools_8c.html#a88d7899467093e27a485527986aad253',1,'ipcTools.c']]],
+  ['mutfree',['mutfree',['../ipcTools_8c.html#a518dd2f4cfca662050363c790fb88972',1,'ipcTools.c']]],
+  ['myalloc',['myAlloc',['../memory_8c.html#ad2337efa36c02f3d7e198fd2154a2d6a',1,'memory.c']]],
+  ['myfree',['myFree',['../memory_8c.html#aeedb1fea6edab8d3c622675777ccd312',1,'memory.c']]]
 ];

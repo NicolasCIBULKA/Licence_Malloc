@@ -7,9 +7,9 @@
  * 
  */
 typedef struct{
-    PaginationUnit* paginationPage;
-    DataRibbon dataArray;
-    int mutex;
+    PaginationUnit* paginationPage; //!< Arrays of PaginationUnit
+    DataRibbon dataArray;           //!< Structure that contains the data
+    int mutex;                      //!< Mutex that will guarantee the unicity of the access
 
 }Memory;
 

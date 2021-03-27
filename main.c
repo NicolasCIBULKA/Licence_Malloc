@@ -67,9 +67,7 @@ void batchMode(int argc, char* argv[]){
         perror("No file name has been given\n");
         exit(1);
     }
-    //char test[] = "init en 32 3";
-    //printf(test);
-    
+   
 
     // opening the file
     FILE* file = fopen(argv[2], "r");
