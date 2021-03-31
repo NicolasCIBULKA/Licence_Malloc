@@ -56,7 +56,34 @@ void interactivemode(int argc, char* argv[]){
 // mode ligne de commande
 void commandeLineMode(int argc, char* argv[]){
     printf("\n----- You picked the command line mode -----\n");
+    // testing if the command line has been given
+    if(argc < 3){
+        perror("No command line has been given\n");
+        exit(1);
+    }
+   
 
+    // command line division
+    char* delim = ";";
+    int nbCmd = 0;
+    
+    *tabcmdline = strtok(argv[2], delim);
+    nbCmd++;
+    
+    while(tabcmdline != NULL) {
+    	tabcmdline = strtok(NULL, delim);
+    	nbCmd++;
+    }
+    if(nbCmd != 4) {
+        perror("Invalid command line\n");
+        exit(2);
+    }
+    
+    // reading columns of the table containing all commands
+    for(index=0; index<5; index++) {
+        languageParser(tabcmdline[index]);
+    }
+    printf("\n----- End of command line mode ----- \n ");
 }
 
 // mode batch
