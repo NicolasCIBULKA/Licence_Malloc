@@ -29,19 +29,17 @@ int currentPos = 0;
 // MAIN
 int main(int argc, char *argv[])
 {
-    if(argc >= 2){
-        // mode interactif
-        if(!strcmp(argv[1], "-i")){
-            interactivemode(argc, argv);
-        }
-        // mode ligne de commande
-        else if(!strcmp(argv[1], "-f")){
-            batchMode(argc, argv);
-        }
-        // mode batch
-        else{
-            commandeLineMode(argc, argv);
-        }
+    // mode interactif
+    if(!strcmp(argv[1], "-i")){
+        interactivemode(argc, argv);
+    }
+    // mode ligne de commande
+    else if(!strcmp(argv[1], "-f")){
+        batchMode(argc, argv);
+    }
+    // mode batch
+    else{
+        commandeLineMode(argc, argv);
     }
     return 0;
 }
@@ -56,36 +54,37 @@ void interactivemode(int argc, char* argv[]){
 // mode ligne de commande
 void commandeLineMode(int argc, char* argv[]){
     printf("\n----- You picked the command line mode -----\n");
-    // testing if the command line has been given
-    if(argc < 3){
-        perror("No command line has been given\n");
+    // testing if command has been given
+    if(argc < 2){
+        perror("No command has been given\n");
         exit(1);
     }
-   
+    char templine[1000] = " ";
+    for(int i = 1; i < argc; i++){
+        strcat(templine," " );
+        strcat(templine, argv[i]);
+    }
 
     // command line division
-    char* delim = ";";
+    char* delim = ",";
     int nbCmd = 0;
+    argv++;
+
+    char* tabcmdline[100];
+    tabcmdline[0] = strtok(templine, delim);
     
-    *tabcmdline = strtok(argv[2], delim);
-    nbCmd++;
-    
-    while(tabcmdline != NULL) {
-    	tabcmdline = strtok(NULL, delim);
-    	nbCmd++;
-    }
-    if(nbCmd != 4) {
-        perror("Invalid command line\n");
-        exit(2);
+    while(tabcmdline[nbCmd] != NULL) {
+        tabcmdline[++nbCmd] = strtok(NULL, delim);
     }
     
     // reading columns of the table containing all commands
-    for(index=0; index<5; index++) {
+    for(int index=0; index < nbCmd; index++) {
+        //printf("%s", tabcmdline[index]);
         languageParser(tabcmdline[index]);
     }
+    
     printf("\n----- End of command line mode ----- \n ");
 }
-
 // mode batch
 void batchMode(int argc, char* argv[]){
     printf("\n----- You picked the batch mode -----\n\n");
@@ -121,7 +120,7 @@ void languageParser(char* line){
     }    
     
     if(!strcmp(tabline[0],"init")){
-        int sizeAllocate = initMemory( atoi(tabline[2]));
+        int sizeAllocate = initMemory( atoi(tabline[1]));
         if(sizeAllocate == 0){
             perror("An error has occured while executing InitMemory !\n");
             exit(4);
@@ -134,7 +133,7 @@ void languageParser(char* line){
         tabNomVar[currentPos] = nomVar;
 
         // allocation
-        tabVar[currentPos] = myAlloc( atoi(tabline[3]));
+        tabVar[currentPos] = myAlloc( atoi(tabline[2]));
         if(tabVar[currentPos] == NULL){
             perror("An error has occured while executing MyAlloc !\n");
             exit(5);
@@ -150,8 +149,8 @@ void languageParser(char* line){
         int freeDone = 0;
         int resultFree = 0;
         while(researchCursor < currentPos && freeDone == 0){
-            if(!strcmp(tabNomVar[researchCursor], tabline[2])){
-                printf("\n%s\n",tabNomVar[researchCursor]);
+            //printf("\n%s,%s", tabNomVar[researchCursor], tabline[1]);
+            if(!strcmp(tabNomVar[researchCursor], tabline[1])){
                 resultFree = myFree(tabVar);
                 freeDone = 1;
             }
@@ -173,6 +172,7 @@ void languageParser(char* line){
         printf("freeMemory done - success\n");
     }
     else{
+
         printf("Error - Instruction not understood\n");
     }
     

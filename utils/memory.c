@@ -107,6 +107,7 @@ void* myAlloc(int size){
     // update of the allocatedMap
     int pos = startBlock - firstAdress;
     actualizeAllocatedMap(pos, size);
+    printf("%d\n", pos);
 
     // filling the PaginationUnit
     unit->isFree = 0;
@@ -152,6 +153,7 @@ int myFree(void *p)
         }
     }
     // if we arrive there, it means the adress given wasn't allocated
+    V(memory.mutex);
     return -1;
 }
 
