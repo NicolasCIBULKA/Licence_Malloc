@@ -33,11 +33,11 @@ int main(int argc, char *argv[])
     if(!strcmp(argv[1], "-i")){
         interactivemode(argc, argv);
     }
-    // mode ligne de commande
+    // mode batch
     else if(!strcmp(argv[1], "-f")){
         batchMode(argc, argv);
     }
-    // mode batch
+    // mode ligne de commande
     else{
         commandeLineMode(argc, argv);
     }
