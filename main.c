@@ -49,7 +49,58 @@ int main(int argc, char *argv[])
 // mode interactif
 void interactivemode(int argc, char* argv[]){
     printf("\n----- You picked the interactive mode -----\n");
+    // initial command description
+    interactivemodehelp();
+
+    // buffer and boolean initialisation
+    char buffer[40];
+    int running = 1;
+
+    // scanning for inputs while the user doesn't exit interactive mode
+    while(running){
+        // interactive mode interface
+        printf(">");
+        scanf('%s',buffer);
+
+        // pre-parsing to handle the specific interactive mode commands
+        if(!strcmp(buffer,"help")){
+            interactivemodehelp();
+
+        }else if (!strcmp(tabline[0],"exitmode")){
+            // loop variant set to false = 0
+            running = 0;
+
+        }else {
+            // empty command
+            if(strlen(buffer)==0){
+                perror('No command given, try help for a list of command');
+
+            }else{
+                // sending the cmd to the parser
+                languageParser(buffer);
+            }
+        }
+
+        // preparing for next command
+        printf('\n');
+    } 
+
+    printf("\n----- End of interactive mode -----\n");
 }
+
+void interactivemodehelp(){
+    // explaining the command's syntax
+    printf("\n----- Command list for interactive mode -----\n");
+    printf(" > init [size] : InitMemory with given [size]\n");
+    printf(" > [nameVar] alloc [size] : allocating [size] to your [nameVar] variable\n");
+    printf(" > free [nameVar] : free the allocated memory for [nameVar] variable\n");
+    printf(" > close memory : freeMemory and end of function\n");
+    printf("----- Interactive mode specific -----\n");
+    printf(" > help  : get a reminder of these commands\n");
+    printf(" > exitmode  : exit the interactive mode\n");
+}
+
+
 
 // mode ligne de commande
 void commandeLineMode(int argc, char* argv[]){
@@ -157,7 +208,7 @@ void languageParser(char* line){
             researchCursor++;
         }
         if(freeDone == 1){
-            perror("Variable hasn't been free, maybe this variable doesn't exist \n");
+            perror("Variable hasn't been freed, maybe this variable doesn't exist \n");
             exit(6);
         }
         else if(resultFree == -1){
