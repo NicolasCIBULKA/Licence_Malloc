@@ -107,7 +107,6 @@ void* myAlloc(int size){
     // update of the allocatedMap
     int pos = startBlock - firstAdress;
     actualizeAllocatedMap(pos, size);
-    printf("%d\n", pos);
 
     // filling the PaginationUnit
     unit->isFree = 0;

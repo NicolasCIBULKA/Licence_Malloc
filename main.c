@@ -15,7 +15,7 @@ void interactivemode(int argc, char* argv[]);
 void commandeLineMode(int argc, char* argv[]);
 void batchMode(int argc, char* argv[]);
 void languageParser(char* line);
-
+void interactivemodehelp();
 
 
 // variables globales
@@ -53,36 +53,38 @@ void interactivemode(int argc, char* argv[]){
     interactivemodehelp();
 
     // buffer and boolean initialisation
-    char buffer[40];
+    char* buffer = malloc(sizeof(char)*50);
     int running = 1;
 
     // scanning for inputs while the user doesn't exit interactive mode
     while(running){
         // interactive mode interface
-        printf(">");
-        scanf('%s',buffer);
-
+        printf("> ");
+        scanf("%[^\n]%*c",line);
         // pre-parsing to handle the specific interactive mode commands
-        if(!strcmp(buffer,"help")){
+        if(!strcmp(line,"help")){
             interactivemodehelp();
 
-        }else if (!strcmp(tabline[0],"exitmode")){
+        }
+        else if (!strcmp(line,"exitmode")){
             // loop variant set to false = 0
             running = 0;
-
-        }else {
+            
+        }
+        else {
             // empty command
-            if(strlen(buffer)==0){
-                perror('No command given, try help for a list of command');
+            if(strlen(line)==0){
+                perror("No command given, try help for a list of command\n");
 
-            }else{
+            }
+            else{
                 // sending the cmd to the parser
-                languageParser(buffer);
+
+                languageParser(line);
             }
         }
 
         // preparing for next command
-        printf('\n');
     } 
 
     printf("\n----- End of interactive mode -----\n");

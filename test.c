@@ -13,8 +13,8 @@ int main(int argc, char const *argv[])
    }
 
    // allocation avec myAlloc
-   char* tab = myAlloc(sizeof(int) * 10);
-   int* tab2 = myAlloc(sizeof(int)*32);
+   char* tab = myAlloc(sizeof(int) * 44);
+   int* tab2 = myAlloc(sizeof(int)*30);
    
    myFree(tab2);
    
@@ -26,7 +26,7 @@ int main(int argc, char const *argv[])
    for (int i = 0; i < 9; i++)
    {
       tab[i] = 'a';
-      printf(" %c -", tab[i]);
+      printf(" %c ", tab[i]);
    }
 
    // Liberation tableau
