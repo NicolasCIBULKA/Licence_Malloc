@@ -7,20 +7,20 @@
 #include <sys/types.h>
 #include <fcntl.h>
 
-// Constantes
+// constants
 #define SIZETAB 100
 
-// prototype fonctions
+// function prototypes
 void interactivemode(int argc, char* argv[]);
-void commandeLineMode(int argc, char* argv[]);
+void commandLineMode(int argc, char* argv[]);
 void batchMode(int argc, char* argv[]);
 void languageParser(char* line);
 void interactivemodehelp();
 
 
-// variables globales
-char* tabNomVar[SIZETAB];  // tab des pointeurs vers les zones mémoires allouées
-void* tabVar[SIZETAB];     // tab des noms de variables. La variable a la place i sera la zone mémoire à la position i dans le tableau de zones mémoires   
+// global variables
+char* tabNomVar[SIZETAB];  // array with the pointers towards allocated memory areas
+void* tabVar[SIZETAB];     // variable names array. The variable at place i will be the memory area at position i in the memory area array
 char* tabline[100];
 char line[250];
 int currentPos = 0; 
@@ -29,33 +29,30 @@ int currentPos = 0;
 // MAIN
 int main(int argc, char *argv[])
 {
-    // mode interactif
+    // interactive mode
     if(!strcmp(argv[1], "-i")){
         interactivemode(argc, argv);
     }
-    // mode batch
+    // batch mode
     else if(!strcmp(argv[1], "-f")){
         batchMode(argc, argv);
     }
-    // mode ligne de commande
+    // command line mode
     else{
-        commandeLineMode(argc, argv);
+        commandLineMode(argc, argv);
     }
     return 0;
 }
 
-// CODE FONCTIONS
+// Functions' code
 
-// mode interactif
+// interactive mode
 void interactivemode(int argc, char* argv[]){
     printf("\n----- You picked the interactive mode -----\n");
     // initial command description
     interactivemodehelp();
-
-    // buffer and boolean initialisation
-    char* buffer = malloc(sizeof(char)*50);
+    // boolean initialisation
     int running = 1;
-
     // scanning for inputs while the user doesn't exit interactive mode
     while(running){
         // interactive mode interface
@@ -64,26 +61,21 @@ void interactivemode(int argc, char* argv[]){
         // pre-parsing to handle the specific interactive mode commands
         if(!strcmp(line,"help")){
             interactivemodehelp();
-
         }
         else if (!strcmp(line,"exitmode")){
             // loop variant set to false = 0
             running = 0;
-            
         }
         else {
             // empty command
             if(strlen(line)==0){
                 perror("No command given, try help for a list of command\n");
-
             }
             else{
                 // sending the cmd to the parser
-
                 languageParser(line);
             }
         }
-
         // preparing for next command
     } 
 
@@ -104,8 +96,8 @@ void interactivemodehelp(){
 
 
 
-// mode ligne de commande
-void commandeLineMode(int argc, char* argv[]){
+// command line mode
+void commandLineMode(int argc, char* argv[]){
     printf("\n----- You picked the command line mode -----\n");
     // testing if command has been given
     if(argc < 2){
@@ -138,7 +130,7 @@ void commandeLineMode(int argc, char* argv[]){
     
     printf("\n----- End of command line mode ----- \n ");
 }
-// mode batch
+// batch mode
 void batchMode(int argc, char* argv[]){
     printf("\n----- You picked the batch mode -----\n\n");
     // testing if the file name has been given
@@ -181,7 +173,7 @@ void languageParser(char* line){
         printf("InitMemory done - success \n");
     }
     else if(!strcmp(tabline[1],"alloc")){
-        // enregistrement de la variable
+        // variable record
         char* nomVar = tabline[0];
         tabNomVar[currentPos] = nomVar;
 
@@ -191,7 +183,7 @@ void languageParser(char* line){
             perror("An error has occured while executing MyAlloc !\n");
             exit(5);
         }
-        // on incremente la position du curseur d'allocation 
+        // increasing the position of the allocation cursor 
         currentPos++;
 
         printf("MyAlloc done - success\n");

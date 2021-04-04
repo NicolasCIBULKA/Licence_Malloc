@@ -5,17 +5,17 @@
 
 int main(int argc, char const *argv[])
 {
-   // initialisation de la mémoire
+   // memory initialization   
    int n = initMemory(900);
    if(n == -1){
-      perror("Erreur dans l'allocation de la grande structure\n");
+      perror("Error in the allocation of the large structure\n");
       exit(1);
    }
 
-   // allocation avec myAlloc
+   // allocation with myAlloc
    char* tab = myAlloc(sizeof(char) * 44);
    if(tab == NULL){
-      perror("erreur d'allocation memoire sur tab\n");
+      perror("memory allocation error on tab\n");
       exit(2);
    }
    printf("sizeof tab : %ld\n", sizeof(char)*44);
@@ -23,7 +23,7 @@ int main(int argc, char const *argv[])
 
    int* tab2 = myAlloc(sizeof(int)*30);
    if(tab2 == NULL){
-      perror("erreur d'allocation memoire sur tab2\n");
+      perror("memory allocation error on tab2\n");
       exit(2);
    }
    printf("sizeof tab2 : %ld\n", sizeof(int)*30);
@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
 
    int* tab3 = myAlloc(sizeof(int)*50);
    if(tab3 == NULL){
-      perror("erreur d'allocation memoire sur tab3\n");
+      perror("memory allocation error on tab3\n");
       exit(2);
    }
    printf("sizeof tab3 : %ld\n", sizeof(float)*50);
@@ -44,13 +44,13 @@ int main(int argc, char const *argv[])
    }
    printf("\n");
 
-   // Liberation tableau
+   // free tab memory
    myFree(tab);
    myFree(tab2);
 
    tab2 = myAlloc(sizeof(int)*30);
    if(tab2 == NULL){
-      perror("erreur d'allocation memoire sur tab2\n");
+      perror("memory allocation error on tab2\n");
       exit(2);
    }
    printf("sizeof tab2 : %ld\n", sizeof(int)*30);
@@ -58,14 +58,14 @@ int main(int argc, char const *argv[])
 
    tab = myAlloc(sizeof(char) * 44);
    if(tab == NULL){
-      perror("erreur d'allocation memoire sur tab\n");
+      perror("memory allocation error on tab\n");
       exit(2);
    }
    printf("sizeof tab : %ld\n", sizeof(char)*44);
 
 
    myFree(tab3);
-   // Liberation st ructure
+   // free structure memory
    freeMemory();
    
    return 0;
